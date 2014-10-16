@@ -19,40 +19,52 @@ or
 ###Parameters
 
 - **count_key** (**required**)
-    - The key within the record to count unique instances of *eg. event*
+    - The key within the record to count unique instances of 
+        - *eg. event*
 
 - **input_tag_exclude** (optional)
-    - A pattern to exclude from the incoming tag *default: ''*
+    - A pattern to exclude from the incoming tag 
+        - *default: ''*
 
 - **emit_only** (optional) - *boolean*
-    - Skip redis and re-emit using emit_to *default: false*
+    - Skip redis and re-emit using emit_to 
+        - *default: false*
     
 - **emit_to** (optional) - *string*
-    - Tag to re-emit with *default: debug.events*
+    - Tag to re-emit with 
+        - *default: debug.events*
     
 - **redis_host** (optional) - *string*
-    - Host address of the redis server *default: localhost*
+    - Host address of the redis server 
+        - *default: localhost*
     
 - **redis_port** (optional)
-    - Port of the redis server *default: 6379*
+    - Port of the redis server 
+        - *default: 6379*
     
 - **redis_password** (optional)
-    - Password for the redis server *default: nil*
+    - Password for the redis server 
+        - *default: nil*
     
 - **redis_db_number** (optional)
-    - Redis DB *default: 0*
+    - Redis DB 
+        - *default: 0*
 
 - **redis_output_key** (optional)
-    - The key to prefix against the tag *default: ''*
+    - The key to prefix against the tag 
+        - *default: ''*
 
 - **capture_extra_if** (optional)
-    - An additional field to attach to the captured key *default: nil*
+    - An additional field to attach to the captured key 
+        - *default: nil*
     
 - **capture_extra_replace** (optional)
-    - A regular expression to replace a portion of the extra capture *default: ''*
+    - A regular expression to replace a portion of the extra capture 
+        - *default: ''*
 
 - **flush_interval** (optional)
-    - Provided from **Fluent::BufferedOutput** time in seconds between flushes *default: 60*
+    - Provided from **Fluent::BufferedOutput** time in seconds between flushes 
+        - *default: 60*
 
 
   
