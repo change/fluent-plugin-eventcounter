@@ -18,8 +18,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
   config_param :capture_extra_if, :string, :default => nil
   config_param :capture_extra_replace, :string, :default => ''
 
-  config_param :count_key, :string
-  config_param :flush_interval, :time, :default => 10
+  config_param :count_key, :string # REQUIRED 
 
   attr_accessor :counts
 
@@ -68,12 +67,10 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
         counts.each do |tag,events|
           events.each do |event, c|
             redis_key = [@redis_output_key,tag].join(':')
-            Fluent::Engine.emit(@emit_to, Time.now, redis_key => { event => c})
             @redis.hincrby(redis_key, event, c.to_i)
           end        
         end
       end
     end
   end
-
 end

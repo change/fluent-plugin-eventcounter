@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |gem|
   gem.name        = "fluent-plugin-eventcounter"
-  gem.version     = "0.0.1"
+  gem.version     = "0.0.2"
   gem.authors     = ["Sean Dick", "Change.org"]
   gem.email       = ["sean@change.org"]
-  gem.homepage    = "https://github.com/seanmdick/fluent-plugin-eventcounter"
+  gem.homepage    = "https://github.com/change/fluent-plugin-eventcounter"
   gem.summary     = %q{Fluentd plugin to count occurences of values in a field and emit them or write them to redis}
   gem.description = %q{Fluentd plugin to count occurences of values in a field and emit them or write them to redis}
   gem.license     = "MIT"
