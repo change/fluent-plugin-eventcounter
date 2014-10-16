@@ -12,7 +12,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
   config_param :redis_port, :integer, :default => 6379
   config_param :redis_password, :string, :default => nil
   config_param :redis_db_number, :integer, :default => 0
-  config_param :redis_output_key, :string
+  config_param :redis_output_key, :string, :default => ''
 
   config_param :input_tag_exclude, :string, :default => ''
   config_param :capture_extra_if, :string, :default => nil
@@ -40,8 +40,10 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
   end
 
   def format(tag, time, record)
+    return '' unless record[@count_key]
+
     if @capture_extra_if && record[@capture_extra_if]
-      extra = extra.gsub(@capture_extra_replace, '')
+      extra = record[@capture_extra_if].gsub(@capture_extra_replace, '')
       [tag.gsub(@input_tag_exclude,""), [record[@count_key], extra].compact.join(':')].to_json + "\n"
     else
       [tag.gsub(@input_tag_exclude,""), record[@count_key]].to_json + "\n"
