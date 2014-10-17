@@ -39,11 +39,11 @@ event.counts { 12086: { 'seen': 2, 'liked': 1, 'clicked:http://example.com/12086
 event.counts { 1337: { 'seen': 1 } }
 ```
 
-If the plugin is not set to emit only, and redis is properly configured each of those counts increment a key in a hash specified by `redis_output_key`:`tag`
+If the plugin is not set to emit only, and redis is properly configured each of those counts increment a key in a hash specified by `redis_output_key`:`tag` `count_key`
 
 ##Installation
 
-OSX/fluentd
+OSX
 
     /opt/td-agent/embedded/bin/gem install fluent-plugin-eventcounter
 

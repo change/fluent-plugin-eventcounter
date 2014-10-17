@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |gem|
   gem.name        = "fluent-plugin-eventcounter"
-  gem.version     = "0.0.2"
+  gem.version     = "0.0.3"
   gem.authors     = ["Sean Dick", "Change.org"]
   gem.email       = ["sean@change.org"]
   gem.homepage    = "https://github.com/change/fluent-plugin-eventcounter"
