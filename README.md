@@ -56,6 +56,8 @@ or
 
 ###Parameters
 
+#### Basic
+
 - **count_key** (**required**)
     - The key within the record to count unique instances of 
         - *eg. event*
@@ -71,6 +73,18 @@ or
 - **emit_to** (optional) - *string*
     - Tag to re-emit with 
         - *default: debug.events*
+
+#### Extra Capture (optional)
+
+- **capture_extra_if** (optional)
+    - An additional field to attach to the captured key 
+        - *default: nil*
+    
+- **capture_extra_replace** (optional)
+    - A regular expression to replace a portion of the extra capture 
+        - *default: ''*
+
+#### Redis Config (optional)
     
 - **redis_host** (optional) - *string*
     - Host address of the redis server 
@@ -92,13 +106,7 @@ or
     - The key to prefix against the tag 
         - *default: ''*
 
-- **capture_extra_if** (optional)
-    - An additional field to attach to the captured key 
-        - *default: nil*
-    
-- **capture_extra_replace** (optional)
-    - A regular expression to replace a portion of the extra capture 
-        - *default: ''*
+#### Other
 
 - **flush_interval** (optional)
     - Provided from **Fluent::BufferedOutput** time in seconds between flushes 
