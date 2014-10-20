@@ -75,4 +75,36 @@ describe Fluent::EventCounterOutput do
       end
     end
   end
+
+  describe 'output' do
+    let (:conf) {
+      %[
+        count_key event
+        capture_extra_if url
+        capture_extra_replace \\?.*$
+        emit_only true
+      ]
+    }
+    let (:input) {
+      %[{"email": "john.doe@example.com", "timestamp": "1337197600", "smtp-id": "<4FB4041F.6080505@example.com>", "event": "processed", "local_record_id": "11"}
+        {"email": "john.doe@example.com", "timestamp": "1337966815", "category": "newuser", "event": "click", "url": "http://example.com?foo=bar&baz=quux", "local_record_id": "72"}
+        {"email": "john.doe@example.com", "timestamp": "1337969592", "smtp-id": "<20120525181309.C1A9B40405B3@Example-Mac.local>", "event": "processed", "local_record_id": "72"}
+        {"email": "john.doe@example.com", "timestamp": "1337197600", "smtp-id": "<4FB4041F.6080505@example.com>", "event": "processed", "local_record_id": "72"}
+        {"email": "john.doe@example.com", "timestamp": "1337966815", "category": "newuser", "event": "click", "url": "http://example.com?blop=spop", "local_record_id": "72"}
+        {"email": "john.doe@example.com", "timestamp": "1337969592", "smtp-id": "<20120525181309.C1A9B40405B3@Example-Mac.local>", "event": "processed", "local_record_id": "72"}]
+    }
+    let (:eventcounter) { Fluent::Test::BufferedOutputTestDriver.new(Fluent::EventCounterOutput.new).configure(conf) }
+
+    it "formats the counts against the provided tag" do
+      eventcounter.tag = 'test'
+      input.split("\n").each do |line|
+        data = JSON.parse line
+        eventcounter.emit data, Time.now 
+      end
+      output = eventcounter.run['test']
+
+      expect(output['processed']).to eq 4
+      expect(output['click:http://example.com']).to eq 2
+    end
+  end
 end
