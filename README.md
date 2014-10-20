@@ -35,7 +35,7 @@ With a conf like
 You would get
 
 ```
-event.counts { 12086: { 'seen': 2, 'liked': 1, 'clicked:http://example.com/promote': 1 } }
+event.counts { 12086: { 'seen': 2, 'liked': 1, 'clicked:http://example.com/promote': 2 } }
 event.counts { 1337: { 'seen': 1 } }
 ```
 
