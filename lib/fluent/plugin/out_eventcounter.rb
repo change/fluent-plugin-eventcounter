@@ -17,7 +17,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
   config_param :input_tag_exclude, :string, :default => ''
   config_param :capture_extra_if, :string, :default => nil
   config_param :capture_extra_replace, :string, :default => ''
-  config_param :debug_emit, :boolean, :default => false
+  config_param :debug_emit, :bool, :default => false
 
   config_param :count_key, :string # REQUIRED 
 
@@ -59,12 +59,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
         counts[key][event] += 1 
       end
     end
-    if @debug_emit || @emit_only
-      counts.each do |tag, events|
-        Fluent::Engine.emit(@emit_to, Time.now, tag => events)
-      end
-      return if @emit_only
-    end
+
     @redis.pipelined do
       counts.each do |tag,events|
         events.each do |event, c|
@@ -72,6 +67,13 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
           @redis.hincrby(redis_key, event, c.to_i)
         end        
       end
+    end unless @emit_only
+
+    if @emit_only || @debug_emit
+      counts.each do |tag, events|
+        Fluent::Engine.emit(@emit_to, Time.now, tag => events)
+      end
     end
+
   end
 end
