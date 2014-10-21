@@ -81,7 +81,7 @@ or
         - *default: nil*
     
 - **capture_extra_replace** (optional)
-    - A regular expression to replace a portion of the extra capture 
+    - A regular expression to replace a portion of the extra capture. *(note: this is passed as a string and parsed as a regex so be aware that you may need to escape reserved characters to preserve their meaning.)*
         - *default: ''*
 
 #### Redis Config (optional)
