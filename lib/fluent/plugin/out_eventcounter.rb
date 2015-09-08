@@ -71,7 +71,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
 
     if @emit_only || @debug_emit
       counts.each do |tag, events|
-        Fluent::Engine.emit(@emit_to, Time.now, tag => events)
+        router.emit(@emit_to, Time.now, tag => events)
       end
     end
 
