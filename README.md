@@ -59,58 +59,65 @@ or
 #### Basic
 
 - **count_key** (**required**)
-    - The key within the record to count unique instances of 
+    - The key within the record to count unique instances of
         - *eg. event*
 
 - **input_tag_exclude** (optional)
-    - A pattern to exclude from the incoming tag 
+    - A pattern to exclude from the incoming tag
         - *default: ''*
 
 - **emit_only** (optional) - *boolean*
-    - Skip redis and re-emit using emit_to 
+    - Skip redis and re-emit using emit_to
         - *default: false*
-    
+
 - **emit_to** (optional) - *string*
-    - Tag to re-emit with 
+    - Tag to re-emit with
         - *default: debug.events*
 
 #### Extra Capture (optional)
 
 - **capture_extra_if** (optional)
-    - An additional field to attach to the captured key 
+    - An additional field to attach to the captured key
         - *default: nil*
-    
+
 - **capture_extra_replace** (optional)
     - A regular expression to replace a portion of the extra capture. *(note: this is passed as a string and parsed as a regex so be aware that you may need to escape reserved characters to preserve their meaning.)*
         - *default: ''*
 
 #### Redis Config (optional)
-    
+
 - **redis_host** (optional) - *string*
-    - Host address of the redis server 
+    - Host address of the redis server
         - *default: localhost*
-    
+
 - **redis_port** (optional)
-    - Port of the redis server 
+    - Port of the redis server ()
         - *default: 6379*
-    
+
 - **redis_password** (optional)
-    - Password for the redis server 
+    - Password for the redis server
         - *default: nil*
-    
+
+- **redis_sentinel** (optional) - *boolean*
+    - Use `redis_host` and `redis_port` as sentinel
+        - *default: false*
+
+- **redis_master_group_name** (optional) - *string*
+    - Sentinel master group name
+        - *default: mymaster*
+
 - **redis_db_number** (optional)
-    - Redis DB 
+    - Redis DB (not used if `redis_sentinel` is set)
         - *default: 0*
 
 - **redis_output_key** (optional)
-    - The key to prefix against the tag 
+    - The key to prefix against the tag
         - *default: ''*
 
 #### Other
 
 - **flush_interval** (optional)
-    - Provided from **Fluent::BufferedOutput** time in seconds between flushes 
+    - Provided from **Fluent::BufferedOutput** time in seconds between flushes
         - *default: 60*
 
 
-  
