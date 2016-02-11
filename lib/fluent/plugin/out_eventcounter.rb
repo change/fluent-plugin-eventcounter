@@ -12,6 +12,8 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
   config_param :redis_port, :integer, :default => 6379
   config_param :redis_password, :string, :default => nil
   config_param :redis_db_number, :integer, :default => 0
+  config_param :redis_sentinel, :bool, :default => false
+  config_param :redis_sentinel_master_group_name, :string, :default => nil
   config_param :redis_output_key, :string, :default => ''
 
   config_param :input_tag_exclude, :string, :default => ''
@@ -19,7 +21,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
   config_param :capture_extra_replace, :string, :default => ''
   config_param :debug_emit, :bool, :default => false
 
-  config_param :count_key, :string # REQUIRED 
+  config_param :count_key, :string # REQUIRED
 
   attr_accessor :counts
 
@@ -30,13 +32,28 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
 
   def start
     super
-    @redis = Redis.new(
-        host: @redis_host,
-        port: @redis_port,
-        password: @redis_password,
-        thread_safe: true,
-        db: @redis_db_number
-      ) unless @emit_only
+    unless @emit_only
+      @redis = begin
+        if @redis_sentinel
+          sentinels = [{host: @redis_host, port: @redis_port}]
+          Redis.new(
+            url: "redis://#{@redis_sentinel_master_group_name}",
+            sentinels: sentinels,
+            password: @redis_password,
+            thread_safe: true,
+            role: :master
+          )
+        else
+           Redis.new(
+            host: @redis_host,
+            port: @redis_port,
+            password: @redis_password,
+            thread_safe: true,
+            db: @redis_db_number
+          )
+        end
+      end
+    end
   end
 
   def format(tag, time, record)
@@ -56,7 +73,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
       items = io.read.split("\n")
       items.each do |item|
         key, event = JSON.parse(item)
-        counts[key][event] += 1 
+        counts[key][event] += 1
       end
     end
 
@@ -65,7 +82,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
         events.each do |event, c|
           redis_key = [@redis_output_key,tag].join(':')
           @redis.hincrby(redis_key, event, c.to_i)
-        end        
+        end
       end
     end unless @emit_only
 
