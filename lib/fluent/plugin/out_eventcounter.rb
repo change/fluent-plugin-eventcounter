@@ -13,7 +13,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
   config_param :redis_password, :string, :default => nil
   config_param :redis_db_number, :integer, :default => 0
   config_param :redis_sentinel, :bool, :default => false
-  config_param :redis_sentinel_master_group_name, :string, :default => nil
+  config_param :redis_sentinel_master_group_name, :string, :default => 'mymaster'
   config_param :redis_output_key, :string, :default => ''
 
   config_param :input_tag_exclude, :string, :default => ''
