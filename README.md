@@ -98,9 +98,9 @@ or
     - Password for the redis server
         - *default: nil*
 
-- **redis_sentinel** (optional) - *boolean*
-    - Use `redis_host` and `redis_port` as sentinel
-        - *default: false*
+- **redis_sentinels** (optional) - *array*
+    - A list of hosts for failover
+        - *default: `[]`*
 
 - **redis_master_group_name** (optional) - *string*
     - Sentinel master group name
