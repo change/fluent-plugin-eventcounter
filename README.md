@@ -98,16 +98,16 @@ or
     - Password for the redis server
         - *default: nil*
 
-- **redis_sentinel** (optional) - *boolean*
-    - Use `redis_host` and `redis_port` as sentinel
-        - *default: false*
+- **redis_sentinels** (optional) - *array*
+    - A list of sentinel hosts for failover
+        - *default: `[]`*
 
 - **redis_master_group_name** (optional) - *string*
     - Sentinel master group name
         - *default: mymaster*
 
 - **redis_db_number** (optional)
-    - Redis DB (not used if `redis_sentinel` is set)
+    - Redis DB (not used if `redis_sentinels` is set)
         - *default: 0*
 
 - **redis_output_key** (optional)

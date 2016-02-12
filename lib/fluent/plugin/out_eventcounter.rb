@@ -12,7 +12,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
   config_param :redis_port, :integer, :default => 6379
   config_param :redis_password, :string, :default => nil
   config_param :redis_db_number, :integer, :default => 0
-  config_param :redis_sentinel, :bool, :default => false
+  config_param :redis_sentinels, :array, :default => []
   config_param :redis_master_group_name, :string, :default => 'mymaster'
   config_param :redis_output_key, :string, :default => ''
 
@@ -34,8 +34,8 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
     super
     unless @emit_only
       @redis = begin
-        if @redis_sentinel
-          sentinels = [{host: @redis_host, port: @redis_port}]
+        if @redis_sentinels.length > 0
+          sentinels = @redis_sentinels.map {|host| {host: host, port: @redis_port} }
           Redis.new(
             url: "redis://#{@redis_master_group_name}",
             sentinels: sentinels,
