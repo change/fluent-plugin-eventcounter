@@ -10,7 +10,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
 
   config_param :redis_host, :string, :default => 'localhost'
   config_param :redis_port, :integer, :default => 6379
-  config_param :redis_password, :string, :default => nil
+  config_param :redis_password, :string, :default => nil, :secret => true
   config_param :redis_db_number, :integer, :default => 0
   config_param :redis_sentinels, :array, :default => []
   config_param :redis_master_group_name, :string, :default => 'mymaster'
