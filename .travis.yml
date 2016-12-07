@@ -1,0 +1,14 @@
+language: ruby
+services:
+  - redis-server
+rvm:
+  - 2.1
+  - 2.2
+  - 2.3.3
+gemfile:
+  - gemfiles/fluentd.v0.10.gemfile
+  - gemfiles/fluentd.v0.12.gemfile
+  - gemfiles/fluentd.v0.14.gemfile
+  - Gemfile
+before_install:
+  - gem update bundler
