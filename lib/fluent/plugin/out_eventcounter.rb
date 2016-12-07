@@ -1,5 +1,11 @@
 class Fluent::EventCounterOutput < Fluent::BufferedOutput
   Fluent::Plugin.register_output('eventcounter', self)
+
+  # Define `router` method of v0.12 to support v0.10.57 or earlier
+  unless method_defined?(:router)
+    define_method("router") { Engine }
+  end
+
   def initialize
     super
     require 'redis'
@@ -88,7 +94,7 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
 
     if @emit_only || @debug_emit
       counts.each do |tag, events|
-        Fluent::Engine.emit(@emit_to, Time.now, tag => events)
+        router.emit(@emit_to, Time.now, tag => events)
       end
     end
 
