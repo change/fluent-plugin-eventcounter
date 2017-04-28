@@ -12,3 +12,5 @@ coverage
 .yardoc
 .ruby-version
 pkg/*
+
+*.pem
