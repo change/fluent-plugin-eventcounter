@@ -13,7 +13,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.require_paths = ["lib"]
 
-  gem.add_runtime_dependency "fluentd"
+  gem.add_runtime_dependency "fluentd", [">= 0.14.0", "< 2"]
   gem.add_runtime_dependency "redis"
 
   gem.add_development_dependency "bundler"
