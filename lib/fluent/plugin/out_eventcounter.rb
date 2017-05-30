@@ -1,9 +1,13 @@
-class Fluent::EventCounterOutput < Fluent::BufferedOutput
+class Fluent::Plugin::EventCounterOutput < Fluent::Plugin::Output
   Fluent::Plugin.register_output('eventcounter', self)
+
+  helpers :compat_parameters, :event_emitter
+
+  DEFAULT_BUFFER_TYPE = "memory"
 
   # Define `router` method of v0.12 to support v0.10.57 or earlier
   unless method_defined?(:router)
-    define_method("router") { Engine }
+    define_method("router") { Fluent::Engine }
   end
 
   def initialize
@@ -29,9 +33,15 @@ class Fluent::EventCounterOutput < Fluent::BufferedOutput
 
   config_param :count_key, :string # REQUIRED
 
+  config_section :buffer do
+    config_set_default :@type, DEFAULT_BUFFER_TYPE
+    config_set_default :chunk_keys, ['tag']
+  end
+
   attr_accessor :counts
 
   def configure(conf)
+    compat_parameters_convert(conf, :buffer)
     super
     @capture_extra_replace = Regexp.new(@capture_extra_replace) if @capture_extra_replace.length > 0
   end
