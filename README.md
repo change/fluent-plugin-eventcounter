@@ -1,3 +1,5 @@
+> No longer maintained
+
 fluent-plugin-eventcounter  [![Build Status](https://travis-ci.org/change/fluent-plugin-eventcounter.svg?branch=master)](https://travis-ci.org/change/fluent-plugin-eventcounter)
 ==========================
 
